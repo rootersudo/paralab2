@@ -1,0 +1,159 @@
+// ConsoleApplication1.cpp : This file contains the 'main' function. Program execution begins and ends there.
+//
+
+
+//double trap(double a, double b, int kol)
+//{
+//    double s, y, n;
+//    int j;
+//    n = (a - b) / kol;
+//    for (j = 1; j <= kol; j++)
+//    {
+//        y = b + n - 1;
+//        b += n;
+//        s += y * n;
+//    }
+//    return s;
+//
+//}
+//
+//int main()
+//{
+//    //std::cout << "Hello World!\n";
+//    double a, b, s1;
+//    int i, kol;
+//    cout << "Задайте интервал a,b: \n";
+//    cin >> a;
+//    cin >> b;
+//    cout << "Задайте количество разбиений: \n";
+//    cin >> kol;
+//    s1 = trap(a, b, kol);
+//    cout << "Метод трапеций: " <<  s1 << "\n";
+//    return 0;
+//    
+//}
+
+#include<iostream>
+#include<math.h>
+
+
+
+
+
+//double integralpram(double a, double b, int n);
+double pryam(double a, double b, int kol, int k)
+{//k - identificator
+	double s, y, n;
+	int j; s = 0;
+	n = (a - b) / kol;
+	if (k == 0) {
+		//lev
+		b -= n;
+		for (j = 1; j < kol; j++)
+		{
+			y = b - 1;//fx=x-1 b=x
+			b += n;
+			s += y * n;
+		}return s;
+	}
+
+
+	else if (k == 1) {//prav
+		for (j = 1; j <= kol; j++)
+		{
+			b += n;
+			y = b - 1;//fx=x-1
+
+			s += y * n;
+		}return s;
+	}
+
+	else if (k == 2) {
+		b -= n; //switchcase is better
+													//srednyij
+		for (j = 1; j <= kol; j++)
+		{
+			y = b - 1;//fc=b-1
+
+			s += y; b += n;
+		}return n * s;
+	}
+	
+}
+
+
+double trap(double a, double b, int kol)
+{
+	double s, y, y1, n;
+	int j; s = 0;
+	n = (a - b) / kol;
+	for (j = 1; j <= kol; j++)
+	{
+		y1 = b - 1;
+		y = b + n - 1;//fx=x-1
+		b += n;
+		s += (y + y1) / 2 * n;
+	}return s;
+}
+
+double simpson(int a, int b, int kol) {
+	double s, y, y1, y2, b1, y3, n;
+	int j; 
+	n = (a - b) / kol;b1 = b;
+	y1 = b - n - 1;
+	s = 0;
+	for (j = 1; j < kol; j++) {
+		b += 2 * n;
+		y3 = b - 1;
+
+		s += 2 * y3;
+
+	}
+	for (j = 1; j <= kol; j++)
+	{
+		b1 += 2 * n;
+		y = b - 1;//fx=x-1 b=x
+
+
+		s += 4 * y;
+
+	}
+	y2 = b1 + b - 1;
+	return (n / 3) * (s + y2 + y1);
+}
+
+
+
+/*
+double integralpram(double a, double b, int n)
+{
+	double h, S, x;
+	int i;
+	h = (b - a) * 1.0 / n;
+	S = 0;
+	for (i = 0; i < n - 1; i++)
+	{
+		x = a + i * h;
+		S = S + (1 + sin(x) / (1 + cos(x)));
+	}
+	S = h * S;
+	return S;
+}*/
+int main()
+{
+	using namespace std;
+	double y, a, b, k;
+	int n;
+	cin >> a;
+	cin >> b;
+	cin >> n;
+	cin >> k;
+
+	//y = integralpram(a, b, n);
+	y = trap(a, b, n);
+	cout << y << "\n";
+	y = pryam(a, b, n, k);
+	cout << "pryam" << y << "\n";
+	cout << simpson(a, b, n) << "\n";//not working
+
+}
