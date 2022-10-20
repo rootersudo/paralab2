@@ -1,0 +1,18 @@
+
+***************************share & private is keys for code parts***********************
+#include <omp.h>
+========================================================================================
+//N=infinity;
+// for (i =1, i<N,i++)	{sum(1/i);}
+========================================================================================
+#pragma omp;///паралельная часть(обьявление)
+#pragma omp parallel for/// для for
+	for(int = 1;i<N;i++)	//////for is private by default/////счетчик делится по потокам , поэтому не должно быть рекурсий
+		sum;          /////share by default. need to be private//////reduction(1;sum)*******reduction for making share scalar(now it is sum) private
+
+******************not sure about syntax of reduction************************************
+========================================================================================
+omp_get_wtime()/////////////////////////counter of astrounotic(астронамическое) time
+omp_setnum_threats(num)//////////////syntax maybe not correct
+========================================================================================
+
